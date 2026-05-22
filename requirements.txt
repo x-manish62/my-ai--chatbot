@@ -3,4 +3,3 @@ gunicorn
 google-generativeai
 python-dotenv
 requests
-pymongo
