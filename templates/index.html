@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>Mera AI Assistant</h2>
+            <p>Gemini se powered</p>
+        </div>
+        <div id="chat-box" class="chat-box">
+            <div class="message bot-message">Hello! Main aapki kya madad kar sakta hu?</div>
+        </div>
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Yahan apna message likhiye..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>
