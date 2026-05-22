@@ -1,6 +1,6 @@
 flask
 gunicorn
-google-generativeai
+groq
 python-dotenv
 requests
 pymongo

@@ -1,54 +1,108 @@
 from flask import Flask, render_template, request, jsonify
-import requests
-import json
+from groq import Groq
 from pymongo import MongoClient
 import os
 
 app = Flask(__name__)
 
-# 👇 1. YAHAN APNI ASLI API KEY DAALEIN
-API_KEY = "AIzaSyA5_FzNlwCXCWQpExI6Q3wH6btmMJZuthY"
-URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={API_KEY}"
+# ==============================
+# GROQ API
+# ==============================
 
-# 👇 2. Vercel se MongoDB Key aayegi (Database Setup)
+client_ai = Groq(
+    api_key="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"
+)
+
+# ==============================
+# MONGODB
+# ==============================
+
 MONGO_URI = os.environ.get("MONGO_URI")
+
 db_collection = None
+
 if MONGO_URI:
+
     client = MongoClient(MONGO_URI)
+
     db = client["ChatbotDB"]
+
     db_collection = db["chats"]
 
+# ==============================
+# HOME PAGE
+# ==============================
+
 @app.route('/')
+
 def home():
+
     return render_template('index.html')
 
+# ==============================
+# CHAT API
+# ==============================
+
 @app.route('/chat', methods=['POST'])
+
 def chat():
+
     user_msg = request.json.get("message")
-    
-    headers = {'Content-Type': 'application/json'}
-    data = {
-        "contents": [{"parts": [{"text": user_msg}]}]
-    }
-    
+
     try:
-        # Seedha direct API call (Bina kisi library ke)
-        response = requests.post(URL, headers=headers, data=json.dumps(data))
-        result = response.json()
-        
-        if "candidates" in result:
-            bot_reply = result["candidates"][0]["content"]["parts"][0]["text"]
-            
-            # Database mein save karna (agar Mongo connect hai)
-            if db_collection is not None:
-                db_collection.insert_one({"user": user_msg, "bot": bot_reply})
-                
-            return jsonify({"reply": bot_reply})
-        else:
-            return jsonify({"reply": f"API Error: {result.get('error', {}).get('message', 'Unknown Error')}"})
-            
+
+        # AI RESPONSE
+
+        chat_completion = client_ai.chat.completions.create(
+
+            messages=[
+
+                {
+
+                    "role": "user",
+
+                    "content": user_msg
+
+                }
+
+            ],
+
+            model="llama-3.3-70b-versatile"
+
+        )
+
+        bot_reply = chat_completion.choices[0].message.content
+
+        # DATABASE SAVE
+
+        if db_collection is not None:
+
+            db_collection.insert_one({
+
+                "user": user_msg,
+
+                "bot": bot_reply
+
+            })
+
+        return jsonify({
+
+            "reply": bot_reply
+
+        })
+
     except Exception as e:
-        return jsonify({"reply": f"System Error: {str(e)}"})
+
+        return jsonify({
+
+            "reply": f"System Error: {str(e)}"
+
+        })
+
+# ==============================
+# RUN APP
+# ==============================
 
 if __name__ == '__main__':
+
     app.run(debug=True)
