@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 
 # 👇 1. YAHAN APNI ASLI API KEY DAALEIN
-API_KEY = "AIzaSyAnQoBguFm0c006m-KfIzH9jHljkS1IRIk"
+API_KEY = "AIzaSyBvdX_eHWcI7ppuD0uhI98qSiw6ULtHNHA"
 URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={API_KEY}"
 
 # 👇 2. Vercel se MongoDB Key aayegi (Database Setup)
