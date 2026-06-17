@@ -73,60 +73,6 @@ body{
 }
 
 
-
-/* PROFILE IMAGE */
-
-.top-profile-img{
-
-    width: 112px;
-
-    height: 112px;
-
-    margin-top: 65px;
-
-    border-radius: 50%;
-
-    object-fit: cover;
-    object-position: top;
-
-   border: 3px solid #7dd3fc;
-
-box-shadow:
-    0 0 10px #7dd3fc,
-    0 0 20px #7dd3fc,
-    0 0 35px #bae6fd;
-}
-
-
-
-/* PROFILE SECTION */
-
-.profile-section{
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-}
-
-
-
-/* PROFILE NAME */
-
-.profile-name{
-
-    color: white;
-
-    font-size: 13px;
-
-    margin-top: 6px;
-
-    font-weight: bold;
-}
-
-
-
 /* ========================= */
 /* SIDEBAR */
 /* ========================= */
