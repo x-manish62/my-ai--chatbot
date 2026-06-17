@@ -10,7 +10,7 @@ app = Flask(__name__)
 # ==============================
 
 client_ai = Groq(
-    api_key="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"
+    api_key=os.environ.get("GROK_API_KEY")
 )
 
 # ==============================
