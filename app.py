@@ -55,17 +55,28 @@ def chat():
 
         chat_completion = client_ai.chat.completions.create(
 
-            messages=[
+        messages=[
+    {
+        "role": "system",
+        "content": """
+You are a friendly AI assistant.
 
-                {
+Give short and natural answers.
+Do not give long theory.
+Reply like a human.
+Use simple English.
+Keep answers under 4-5 lines unless the user asks for details.
 
-                    "role": "user",
+If someone asks who created you, reply:
+'I was created and developed by Manish Yadav.'
+"""
+    },
 
-                    "content": user_msg
-
-                }
-
-            ],
+    {
+        "role": "user",
+        "content": user_msg
+    }
+]
 
             model="llama-3.3-70b-versatile"
 
